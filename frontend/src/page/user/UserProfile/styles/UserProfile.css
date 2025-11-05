@@ -1,0 +1,339 @@
+
+/* ==============================
+    PAGE HEADER
+============================== */
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.page-divider {
+    border: none;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+/* ==============================
+    PROFILE CONTENT
+============================== */
+.profile-content {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: var(--shadow);
+}
+
+/* ==============================
+    USER INFO SECTION
+============================== */
+.user-info {
+    margin-bottom: 40px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(45, 164, 74, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.info-content {
+    flex: 1;
+}
+
+.info-label {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* ==============================
+    CHANGE PASSWORD BUTTON
+============================== */
+.change-password-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    width: 100%;
+    justify-content: center;
+}
+
+.change-password-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==============================
+    PASSWORD FORM
+============================== */
+.password-form {
+    background: rgba(45, 164, 74, 0.05);
+    border-radius: var(--radius);
+    padding: 30px;
+    border: 1px solid rgba(45, 164, 74, 0.2);
+    display: none;
+}
+
+.password-form.active {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: var(--transition);
+    background: white;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(45, 164, 74, 0.1);
+}
+
+.submit-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: block;
+    width: 100%;
+    box-shadow: var(--shadow);
+}
+
+.submit-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==============================
+    FORM VALIDATION
+============================== */
+.form-control:invalid {
+    border-color: #f87171;
+}
+
+.form-control:valid {
+    border-color: #34d399;
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 6px;
+    display: none;
+}
+
+.form-control:invalid + .error-message {
+    display: block;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+/* 🟢 Medium screens (tablets, <= 992px) */
+@media (max-width: 992px) {
+    .page-title {
+        font-size: 26px;
+        margin-bottom: 8px;
+    }
+
+    .profile-content {
+        padding: 30px;
+    }
+
+    .info-item {
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .info-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    .info-value {
+        font-size: 16px;
+    }
+
+    .change-password-btn {
+        font-size: 15px;
+        padding: 14px 20px;
+    }
+
+    .password-form {
+        padding: 24px;
+    }
+
+    .form-control {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        padding: 14px 28px;
+        font-size: 15px;
+    }
+}
+
+/* 🟠 Small screens (phones, <= 600px) */
+@media (max-width: 600px) {
+    .profile-content {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .info-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .info-value {
+        font-size: 15px;
+    }
+
+    .change-password-btn {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+
+    .password-form {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-control {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        padding: 12px 22px;
+        font-size: 14px;
+    }
+}
+
+/* 🔴 Extra small screens (very small phones, <= 400px) */
+@media (max-width: 400px) {
+    .page-title {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .profile-content {
+        padding: 16px;
+    }
+
+    .info-value {
+        font-size: 14px;
+    }
+
+    .change-password-btn,
+    .submit-btn {
+        width: 100%;
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+
+    .password-form {
+        padding: 16px;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .form-control {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+}

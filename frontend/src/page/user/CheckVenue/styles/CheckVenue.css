@@ -1,0 +1,337 @@
+/* ==============================
+    MAIN CONTENT AREA
+============================== */
+.main-content {
+    padding: 40px;
+    transition: margin-left 0.4s ease;
+    flex: 1;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* ==============================
+    PAGE HEADER
+============================== */
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.page-divider {
+    border: none;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+/* ==============================
+    SEARCH FORM
+============================== */
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: var(--transition);
+    background: white;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(45, 164, 74, 0.1);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+}
+
+.search-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+
+.search-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==============================
+    RESULTS HEADER
+============================== */
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.venue-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.selected-date {
+    font-size: 16px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+/* ==============================
+    TIME SLOTS GRID
+============================== */
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* ==============================
+    TIME SLOT CARD
+============================== */
+.time-slot-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-top: 4px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.time-slot-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.time-slot-card.available {
+    border-top-color: var(--primary);
+}
+
+.time-slot-card.occupied {
+    border-top-color: var(--danger);
+}
+
+.time-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.time-value.available {
+    color: var(--primary);
+}
+
+.time-value.occupied {
+    color: var(--danger);
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.available {
+    background: rgba(45, 164, 74, 0.1);
+    color: var(--primary);
+}
+
+.status-badge.occupied {
+    background: rgba(207, 34, 46, 0.1);
+    color: var(--danger);
+}
+
+.occupant-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.no-occupant {
+    font-size: 14px;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* ==============================
+    EMPTY STATE
+============================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+    grid-column: 1 / -1;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+    color: var(--primary);
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+
+/* ==============================
+    RESPONSIVE DESIGN
+============================== */
+
+/* Tablets (≤992px) */
+@media (max-width: 992px) {
+    .main-content {
+        padding: 30px;
+    }
+
+    .page-title {
+        font-size: 28px;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .venue-name {
+        font-size: 22px;
+    }
+
+    .selected-date {
+        font-size: 15px;
+    }
+
+    .time-slots-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .time-slot-card {
+        padding: 18px;
+    }
+}
+
+/* Mobile (≤600px) */
+@media (max-width: 600px) {
+    .main-content {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .venue-name {
+        font-size: 20px;
+    }
+
+    .selected-date {
+        font-size: 14px;
+    }
+
+    .time-slots-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .time-slot-card {
+        padding: 16px;
+    }
+
+    .time-value {
+        font-size: 16px;
+    }
+
+    .search-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .form-control {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .empty-state {
+        padding: 40px 10px;
+    }
+
+    .empty-icon {
+        font-size: 48px;
+    }
+
+    .empty-state h3 {
+        font-size: 18px;
+    }
+}
