@@ -33,7 +33,7 @@ export const get_homepage = async (req , res) => {
     const users = await User.find({}, 'username email'); // only return name+email
     const news = await News.find({category : 'booking'});
 
-    res.render('admin/adminHome', {
+    res.json( {
         venues,
         reserve,
         history,

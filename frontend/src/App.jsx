@@ -6,6 +6,9 @@ import ReservationForm from './page/user/ReservationForm/ReservationForm';
 import CheckVenue from './page/user/CheckVenue/CheckVenue';
 import UserProfile from './page/user/UserProfile/UserProfile';
 import { useEffect } from 'react';
+import AdminPage from './page/admin/AdminPage';
+import AdminLogin from './page/admin/AdminLogin';
+import AdminDashboard from './page/admin/Dashboard/AdminDashboard';
 
 function App() {
   
@@ -18,6 +21,7 @@ function App() {
                 <Route path='/login' element={<LogSignPage login={true}/>} />
                 <Route path='/signup' element={<LogSignPage login={false}/>} />
 
+                <Route path='/admin/login' element={<AdminLogin/>} />
 
 
                 <Route path='/' element={<UserPage/>}>
@@ -25,6 +29,11 @@ function App() {
                   <Route path='reserve' element={<ReservationForm/>}/>
                   <Route path='check' element={<CheckVenue/>}/>
                   <Route path='profile' element={<UserProfile/>} />
+                </Route>
+
+                <Route path='/admin' element={<AdminPage/>}>
+                  <Route path='dashboard' element={<AdminDashboard/>} />
+
                 </Route>
             </Routes>
       

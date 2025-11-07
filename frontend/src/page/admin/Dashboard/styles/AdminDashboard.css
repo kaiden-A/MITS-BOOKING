@@ -1,0 +1,87 @@
+.admin-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-header h2 {
+  color: #7b2cbf;
+  margin: 0;
+}
+
+.admin-header .admin-logout {
+  text-align: right;
+}
+
+.admin-header .admin-logout a {
+  color: #7b2cbf;
+  margin-left: 10px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Card Styles */
+.user-card, .venue-card, .news-card, .past-card, .active-card {
+  border: 1px solid #7b2cbf;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.status {
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.status.active {
+  color: #fff;
+  background: #388e3c;
+}
+
+.status.disabled {
+  color: #fff;
+  background: #d32f2f;
+}
+
+.dlt-news{
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 8px;
+  transition: background 0.2s;
+  background: #ff3b30;
+  color: white;
+}
+
+
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .admin-tabs {
+    gap: 0.5rem;
+  }
+}

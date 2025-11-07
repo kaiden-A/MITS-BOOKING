@@ -45,7 +45,7 @@ function Success({ open, message, success }) {
 
   return (
     <div style={style}>
-      {success ? "✅" : "❌"} {message}
+      {message}
       <button
         onClick={() => setVisible(false)}
         style={closeButtonStyle}

@@ -1,0 +1,25 @@
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.admin-stat-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+
+.admin-stat-card i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.admin-stat-card.yellow { background: #fbc02d; }
+.admin-stat-card.green { background: #388e3c; }
+.admin-stat-card.orange { background: #f57c00; }

@@ -19,20 +19,20 @@ export const post_login = async (req , res) => {
         const user = await User.findOne({email});
 
         if(!user){
-            return res.json({error : true , msg : 'Invalid Email'})
+            return res.status(401).json({error : true , msg : 'Invalid Email'})
         }
 
         const isMatch = await user.comparePassword(password);
 
 
         if(!isMatch){
-            return res.json({error : true , msg : 'Incorrect password'})
+            return res.status(401).json({error : true , msg : 'Incorrect password'})
         }
 
         const isAdmin = user.email === process.env.ADMIN_EMAIL;
 
         if(isAdminPath && !isAdmin){
-            return res.json({error : 'Your are not an admin'})
+            return res.status(401).json({error : true , msg : 'Your are not an admin'})
         }
 
         const token = createToken(user._id , isAdmin);

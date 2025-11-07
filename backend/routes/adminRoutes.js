@@ -16,7 +16,7 @@ const router = Router();
 
 
 
-router.get('/' , requireAdmin , get_homepage);
+router.get('/dashboard' , requireAdmin , get_homepage);
 
 router.get('/login' , admin_get_login);
 router.post('/login' ,post_login);
