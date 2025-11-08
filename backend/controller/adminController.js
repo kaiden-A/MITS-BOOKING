@@ -49,10 +49,6 @@ export const admin_get_login = (req , res) => {
 }
 
 
-export const get_venue = (req , res) => {
-
-    res.render('admin/createVenue')
-}
 
 export const post_venue = async (req , res) => {
     
@@ -62,11 +58,11 @@ export const post_venue = async (req , res) => {
 
         const venue = await Venue.create({name , location , capacity , active});
 
-        res.json({success : venue});
+        res.json({success : true , msg : "Successfully Add the Venue"});
 
     }catch(err){
         console.log(err);
-        res.json({error : err});
+        res.json({error : true , msg : err});
     }
 
 }
@@ -114,7 +110,7 @@ export const get_past_reservations =  async (req , res) => {
             }
         })
 
-        res.render('admin/data' , { venues : result , title : 'Past Reservations Data' , noData : 'no past data' , script : 'past.js'});
+        res.json({ venues : result , noData : 'no past data'});
 
     }catch(err){
 
@@ -148,7 +144,7 @@ export const get_active_reservations = async (req , res) => {
             }
         })
 
-        res.render('admin/data' , { venues : result , title : 'Active Reservations Data' , noData : 'no active data' , script : 'active.js'});
+        res.json({ venues : result, noData : 'no active data' });
 
     }catch(err){
         console.log(err);
@@ -164,10 +160,6 @@ export const get_venue_inventory = async (req , res) => {
     res.render('admin/inventory' ,  {venues : venue})
 }
 
-export const get_news = async (req , res) => {
-
-    res.render('admin/createNews')
-}
 
 export const post_news = async (req , res) => {
 

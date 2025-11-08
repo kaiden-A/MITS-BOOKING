@@ -1,14 +1,16 @@
-import {BrowserRouter , Route , Routes , useNavigate} from 'react-router-dom';
+import {BrowserRouter , Route , Routes } from 'react-router-dom';
 import LogSignPage from './page/global/LogSignPage';
 import UserPage from './page/user/UserPage';
 import Dashboard from './page/user/Dashboard/Dashboard';
 import ReservationForm from './page/user/ReservationForm/ReservationForm';
 import CheckVenue from './page/user/CheckVenue/CheckVenue';
 import UserProfile from './page/user/UserProfile/UserProfile';
-import { useEffect } from 'react';
 import AdminPage from './page/admin/AdminPage';
 import AdminLogin from './page/admin/AdminLogin';
 import AdminDashboard from './page/admin/Dashboard/AdminDashboard';
+import CreateVenue from './page/admin/CreateVenue/CreateVenue';
+import CreateNews from './page/admin/CreateNews/CreateNews';
+import Reservations from './page/admin/Reservations/Reservations';
 
 function App() {
   
@@ -33,7 +35,10 @@ function App() {
 
                 <Route path='/admin' element={<AdminPage/>}>
                   <Route path='dashboard' element={<AdminDashboard/>} />
-
+                  <Route path='venues' element={<CreateVenue/>} />
+                  <Route path='news' element={<CreateNews/>} />
+                  <Route path='active' element={<Reservations active={true}/>} />
+                  <Route path='past' element={<Reservations active={false}/>} />
                 </Route>
             </Routes>
       

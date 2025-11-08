@@ -1,21 +1,14 @@
 
 import Form from "./components/Form";
-function CreateVenue() {
+function CreateNews() {
 
   const purple = "#7a2f87"; // main purple color
   const purpleLight = "#b46cc1"; // lighter purple
   const purpleDark = "#5a2163"; // darker purple
 
-  const cleanForm = () => {
-
-    setVenueName("");
-    setLocation("");
-    setCapacity("");
-  }
-
   return (
     <>
-      <title>Create a Venue</title>
+      <title>Create a News</title>
       <main
         style={{
           padding: "40px",
@@ -65,7 +58,7 @@ function CreateVenue() {
 
             onClick={() => cleanForm()}
           >
-            <i className="fas fa-plus-circle"></i> Create New Venue
+            <i className="fas fa-plus-circle"></i> Create New News
           </button>
         </div>
         
@@ -80,4 +73,4 @@ function CreateVenue() {
   );
 }
 
-export default CreateVenue;
+export default CreateNews;

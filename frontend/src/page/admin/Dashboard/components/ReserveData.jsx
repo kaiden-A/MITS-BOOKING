@@ -7,7 +7,7 @@ function ReserveData({activeCard , data}){
             {
                 data.length > 0 ? (
                     data.map((d , i) => {
-                        <div className={`${activeCard ? 'active-card' : 'past-card'}`}>
+                        <div key={i} className={`${activeCard ? 'active-card' : 'past-card'}`}>
                             <h4>{d?.venueId?.name}</h4>
                             <p>{`Reserve By: ${d?.userId?.username}`}</p>
                             <p>{`Email: ${d?.userId?.email}`}</p>
