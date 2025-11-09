@@ -16,6 +16,9 @@ import { requireAdmin } from '../middleware/requireAdmin.js';
 const router = Router();
 
 
+router.get('/' , requireAdmin , (req , res) => {
+    res.json({cookies : true , msg : 'Valid Admin User'})
+})
 
 router.get('/dashboard' , requireAdmin , get_homepage);
 

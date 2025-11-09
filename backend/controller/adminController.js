@@ -80,7 +80,7 @@ export const update_status_venues = async (req , res) => {
             return res.status(404).json({error : "Updating The venue status has fail"})
         }
 
-        res.json({success : updatedDocument})
+        res.json({success : true , msg : "venue being updated" ,data: updatedDocument})
     }catch(err){
         console.log(err);
     }
@@ -157,7 +157,7 @@ export const get_venue_inventory = async (req , res) => {
     const venue = await Venue.find();
 
 
-    res.render('admin/inventory' ,  {venues : venue})
+    res.json({venues : venue})
 }
 
 

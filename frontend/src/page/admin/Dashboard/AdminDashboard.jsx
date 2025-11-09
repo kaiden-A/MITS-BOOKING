@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link , useNavigate} from 'react-router-dom';
 
 import DataCard from './components/DataCard';
 import Tabs from './components/Tabs';
@@ -18,6 +18,8 @@ function AdminDashboard(){
     const [users , setUsers] = useState([]);
     const [news , setNews] = useState([]);
 
+    const navigate = useNavigate();
+
     const [active , setActive] = useState("Venues");
 
     useEffect(() => {
@@ -32,7 +34,6 @@ function AdminDashboard(){
                 })
 
                 const data = await responses.json();
-                console.log(data);
 
                 setVenues(data.venues);
                 setReserve(data.reserve);
@@ -53,6 +54,25 @@ function AdminDashboard(){
         setActive(tab);
     }
 
+    const logout = async () => {
+
+        try{
+
+            const responses = await fetch(`${import.meta.env.VITE_BACKEND_API}/admin/logout` , {
+                credentials : 'include',
+            })
+
+            const data = await responses.json();
+
+            if(data.success){
+                navigate('/login')
+            }
+
+        }catch(err){
+            console.log(err);
+        }
+    }
+
 
     return(
 
@@ -64,7 +84,7 @@ function AdminDashboard(){
                     <h2>Welcome Back Admin</h2>
                     <div className="admin-logout">
                         <span>admin@gmail.com</span>
-                        <Link>logout</Link>
+                        <Link onClick={logout}>logout</Link>
                     </div>
                 </div>
 

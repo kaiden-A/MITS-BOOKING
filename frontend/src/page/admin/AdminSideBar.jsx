@@ -182,21 +182,21 @@ function AdminSidebar() {
               className="nav-item"
               style={{
                 background:
-                  location.pathname === "/admin/venues/inventories"
+                  location.pathname === "/admin/inventories"
                     ? activeBg
                     : "rgba(255,255,255,0.15)",
                 color: "white",
               }}
-              onClick={() => handleNavigate("/admin/venues/inventories")}
+              onClick={() => handleNavigate("/admin/inventories")}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.background =
-                  location.pathname === "/admin/venues/inventories"
+                  location.pathname === "/admin/inventories"
                     ? activeBg
                     : hoverBg)
               }
               onMouseLeave={(e) =>
                 (e.currentTarget.style.background =
-                  location.pathname === "/admin/venues/inventories"
+                  location.pathname === "/admin/inventories"
                     ? activeBg
                     : "rgba(255,255,255,0.15)")
               }

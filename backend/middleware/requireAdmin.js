@@ -11,7 +11,7 @@ export const requireAdmin = async (req , res , next) => {
     const token = req.cookies.jwt;
 
     if(!token){
-        return res.redirect('/admin/login')
+        return res.status(401).json({cookies : false , msg : 'user doesnt have a cookies'})
     }
 
     try{
@@ -23,19 +23,19 @@ export const requireAdmin = async (req , res , next) => {
             const user = await User.findById(decodedToken.id);
 
             if(!user){
-                return res.redirect('/login');
+                return res.status(401).json({cookies : false , msg : 'invalid Admin'});
             }
 
             req.user = user;
             next();
         }else{
 
-           res.redirect('/') 
+           res.status(401).json({cookies : false , msg : 'doesnt have a cookies'}) 
         }
 
 
     }catch(err){
 
-        res.redirect('/admin/login');
+        res.json({cookies : false , msg : 'doesnt have a cookies'});
     }
 }

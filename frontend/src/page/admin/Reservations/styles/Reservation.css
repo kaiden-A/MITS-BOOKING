@@ -6,13 +6,17 @@
       display: block;
   padding: 10px;
   background: #f9f9f9;
-  width: 100%;
+  width: 80%;
 
 }
 @media (max-width: 768px) {
   .content {
     margin-left: 0;
     padding: 15px;
+  }
+
+  .mother{
+    width: 100%;
   }
 }
 

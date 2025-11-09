@@ -16,7 +16,7 @@ function VenuesCard({venues}){
                                     venue?.active ? (
                                         <span className="status active">Active</span>
                                     ) : (
-                                        <span className="status disable">Disable</span>
+                                        <span className="status disabled">Disable</span>
                                     )
                                 }
                             </p>
