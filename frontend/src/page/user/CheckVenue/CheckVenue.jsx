@@ -1,5 +1,5 @@
 import './styles/CheckVenue.css'
-import EmptyState from './components/emptyState';
+import EmptyState from './components/EmptyState';
 import Slot from './components/Slot';
 import { useEffect, useState } from 'react';
 
