@@ -48,6 +48,7 @@ function LogIn(){
             open={errBox}
             message={errMsg}
             success={false}
+            onClose={() => setErrBox(false)}
         />
         
         <title>LogIn page</title>
@@ -58,7 +59,7 @@ function LogIn(){
                         <img src="/mitsLogo.png" alt="School Logo"/>
                     </div>
                     <div className="school-name">
-                        <h1>Maahad Integrasi Tahfiz Selangor</h1>
+                        <h1 style={{color :  "#22863a"}}>Maahad Integrasi Tahfiz Selangor</h1>
                         <p>Alam Impian Klang</p>
                     </div>
                 </div>
@@ -103,7 +104,7 @@ function LogIn(){
                             <button type="submit" id="loginButton">LOGIN</button>
                             
                             <div className="form-footer">
-                                <p>Don't have an account? <Link to={'/signup'} >Sign Up</Link></p>
+                                <p>Have any Problem? Please contact the School Technician</p>
                             </div>
                         </form>
                     </div>

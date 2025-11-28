@@ -1,11 +1,10 @@
 import LogIn from "./components/LogIn";
-import SignUp from "./components/SignUp";
 
-function LogSignPage({login}){
+function LogSignPage(){
 
     return(
 
-        login ? <LogIn/> : <SignUp/>
+        <LogIn/>
     )
 }
 

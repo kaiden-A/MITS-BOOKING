@@ -15,6 +15,8 @@ function ReservationForm(){
     const [reserveReason , setReserveReason] = useState("");
 
     const [success , setSuccess] = useState(false);
+    cosnt [err , setErr] = useState(false);
+    const [msg , setMsg] = useState("");
 
     useEffect(() => {
 
@@ -107,7 +109,16 @@ function ReservationForm(){
             
 
             if(data.success){
+                setErr(false)
+                setMsg(data.msg)
                 setSuccess(true);
+                resetForm();
+            }
+
+            if(data.error){
+                setSuccess(false);
+                setMsg(data.msg);
+                setErr(true);
                 resetForm();
             }
 
@@ -119,6 +130,18 @@ function ReservationForm(){
 
     return(
         <>
+            <Success
+                open={success}
+                message={msg}
+                success={true}
+                onClose={() => setSuccess(false)}
+            />
+            <Success
+                open={err}
+                message={msg}
+                success={false}
+                onClose={() => setErr(false)}
+            />
             <title>Reserve Venue Form</title>
             <main className="main-content" >
                 <div className="form-header">
@@ -214,11 +237,6 @@ function ReservationForm(){
                     </form>
                 </div>
             </main>
-            <Success
-                open={success}
-                message={'successfully reserve venue'}
-                success={true}
-            />
         </>
     )
 }

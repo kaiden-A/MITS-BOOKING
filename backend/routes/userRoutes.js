@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { get_homepage  , post_reserve , 
     delete_reserve , get_reserve_form , 
-    get_user_profile, post_change_password } from '../controller/reserveController.js';
+    get_user_profile, post_change_password } from '../controller/userController.js';
 
 const router = Router();
 

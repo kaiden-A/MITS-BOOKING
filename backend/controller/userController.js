@@ -69,7 +69,8 @@ export const post_reserve = async (req , res) => {
         const reservations = slots.map(slot => ({userId , venueId , date, slot , reason}))
 
         const reserve = await reserveVenue.insertMany(reservations);
-        res.json({success: true , msg : reserve});
+
+        res.json({success: true , msg : "Successfuly reserve venue"});
         
     }catch(err){
         console.log(err);

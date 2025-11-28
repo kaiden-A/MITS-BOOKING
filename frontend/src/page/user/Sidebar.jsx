@@ -82,17 +82,6 @@ function Sidebar() {
               Check Schedule
             </button>
 
-            <button
-              className={`nav-item ${
-                location.pathname === "/profile" ? "active" : ""
-              }`}
-              onClick={() => handleNavigate("/profile")}
-            >
-              <span className="nav-icon">
-                <i className="fas fa-user"></i>
-              </span>
-              User Account
-            </button>
           </div>
         </div>
 

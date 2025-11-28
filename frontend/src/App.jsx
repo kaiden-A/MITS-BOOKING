@@ -21,8 +21,7 @@ function App() {
       <BrowserRouter>
 
             <Routes>
-                <Route path='/login' element={<LogSignPage login={true}/>} />
-                <Route path='/signup' element={<LogSignPage login={false}/>} />
+                <Route path='/login' element={<LogSignPage/>} />
 
                 <Route path='/admin/login' element={<AdminLogin/>} />
 

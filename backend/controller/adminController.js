@@ -43,11 +43,6 @@ export const get_homepage = async (req , res) => {
 };
 
 
-export const admin_get_login = (req , res) => {
-
-    res.render('admin/adminLogin')
-}
-
 
 
 export const post_venue = async (req , res) => {
@@ -200,3 +195,4 @@ export const delete_news = async (req , res) => {
         res.status(500).json({error : 'SERVER ERROR'})
     }
 }
+

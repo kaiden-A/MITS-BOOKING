@@ -41,6 +41,7 @@
   padding: 1rem;
   box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s;
+  overflow: hidden;
 }
 
 .status {
