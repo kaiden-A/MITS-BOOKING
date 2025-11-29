@@ -1,6 +1,7 @@
 import Venue from "../models/venue.js";
 import reserveVenue from "../models/reserveVenue.js";
 import HistoryReserve from '../models/historyReserve.js';
+import activeKey from "../models/ActiveKey.js";
 import venue from "../models/venue.js";
 import User from '../models/users.js';
 import News from "../models/News.js";
@@ -52,6 +53,16 @@ export const post_venue = async (req , res) => {
         const {name , location , capacity , active} = req.body;
 
         const venue = await Venue.create({name , location , capacity , active});
+        
+        if(!venue){
+            return res.status(403).json({error : true , msg : "Fail Create The Venue"})
+        }
+
+        const storeKey = await activeKey.create({venueId : venue._id});
+
+        if(!storeKey){
+            return res.status(403).json({error : true , msg : "Fail to Store The Key"})
+        }
 
         res.json({success : true , msg : "Successfully Add the Venue"});
 
@@ -72,7 +83,7 @@ export const update_status_venues = async (req , res) => {
         const updatedDocument = await Venue.findByIdAndUpdate(venueId , {active : active} , {new : true});
 
         if(!updatedDocument){
-            return res.status(404).json({error : "Updating The venue status has fail"})
+            return res.status(404).json({error : true , msg : "Updating The venue status has fail"})
         }
 
         res.json({success : true , msg : "venue being updated" ,data: updatedDocument})
@@ -165,10 +176,10 @@ export const post_news = async (req , res) => {
         const news = await News.create({title , description , category});
 
         if(!news){
-            return res.json({error : 'UNCESSEFULLY CREATE NEWS'})
+            return res.json({error : true , msg : 'UNCESSEFULLY CREATE NEWS'})
         }
 
-        res.json({success : news});
+        res.json({success : true , data : news , msg : "Successfully Create News"});
 
     }catch(err){
 
@@ -184,15 +195,15 @@ export const delete_news = async (req , res) => {
         const news = await News.findByIdAndDelete(newsId);
 
         if(!news){
-            return res.json({error : 'Fail to delete news'})
+            return res.json({error: true , msg : 'Fail to delete news'})
         }
 
-        res.json({success : news});
+        res.json({success : true , data : news , msg : "Successfully delete news"});
 
     }catch(err){
         console.log(err);
 
-        res.status(500).json({error : 'SERVER ERROR'})
+        res.status(500).json({error : true , msg : 'SERVER ERROR'})
     }
 }
 

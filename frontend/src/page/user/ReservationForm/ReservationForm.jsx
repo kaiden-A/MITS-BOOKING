@@ -15,7 +15,7 @@ function ReservationForm(){
     const [reserveReason , setReserveReason] = useState("");
 
     const [success , setSuccess] = useState(false);
-    cosnt [err , setErr] = useState(false);
+    const [err , setErr] = useState(false);
     const [msg , setMsg] = useState("");
 
     useEffect(() => {

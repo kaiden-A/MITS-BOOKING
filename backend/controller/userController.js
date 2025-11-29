@@ -3,6 +3,8 @@ import reserveVenue from "../models/reserveVenue.js";
 import User from '../models/users.js';
 import Venue from '../models/venue.js';
 import { timeSlot } from "./timeSlot.js";
+import activeKey from "../models/ActiveKey.js";
+import historyKey from "../models/HistoryKey.js";
 
 export const get_homepage = async (req , res) => {
 
@@ -111,6 +113,82 @@ export const delete_reserve = async (req , res) => {
         console.log(err);
 
         res.status(500).json({error : true , msg : "Server Error"});
+    }
+
+}
+
+export const reserve_key = async(req , res) =>{
+
+    const venueId = req.params.id;
+    const user = req.user;
+
+    try{
+
+        const key = await activeKey.findOne({venueId : venueId});
+        if(!key){
+            return res.status(401).json({error : true , msg : "Key Doesn't Exist"})
+        }
+
+        if(key.keyStatus === "active"){
+            const user = await User.findById(key.userId);
+            return res.status(401).json({error : true , msg : `${user?.username} doesn't return the key yet`})
+        }
+
+        key.keyStatus = "active";
+        key.userId = user._id;
+        key.takeTime = new Date();
+
+        await key.save();
+
+        res.json({success : true , msg : "Successfully Take The Key"})
+
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error : true , msg : "Server Error"})
+
+    }
+
+}
+
+export const return_key = async(req , res) => {
+
+    const venueId = req.params.id;
+
+    try{
+
+        const key = await activeKey.findOne({venueId : venueId});
+
+        if(!key){
+            return res.status(403).json({error : true , msg : "Key Doesnt Exist"});
+        }
+
+        if(key.keyStatus !== "active"){
+            return res.status(403).json({error : true , msg : "Key must be reserved first"})
+        }
+
+        key.returnTime = new Date();
+        await key.save();
+
+        const storeKey = await historyKey.create({
+            venueId : key.venueId,
+            userId : key.userId,
+            keyStatus : "returned",
+            takeTime : key.takeTime,
+            returnTime : key.returnTime
+        });
+
+        key.keyStatus = "available";
+        key.userId = null;
+        key.takeTime = null;
+        key.returnTime = null;
+
+        await key.save();
+
+        return res.json({success : true , msg : "Successfully return the key"})
+
+
+    }catch(err){
+        console.log(err)
     }
 
 }
