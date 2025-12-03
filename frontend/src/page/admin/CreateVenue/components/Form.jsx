@@ -48,6 +48,7 @@ function Form({purple , purpleDark , purpleLight}){
         <Success
             open={success}
             message={"Successfully Add Venue"}
+            onClose={() => setSuccess(!success)}
             success={true}
         />
         <div

@@ -12,7 +12,9 @@ function Dashboard(){
 
     const [data , setData] = useState("");
     const [loading , setLoading] = useState(true);
-    const [activeId , setActiveId] = useState(0);
+    
+    const [venueName , setVenueName] = useState("");
+    const [venueId , setVenueId] = useState(0);
     const [openModal , setOpenModal] = useState(false);
 
     const navigate = useNavigate();
@@ -27,6 +29,8 @@ function Dashboard(){
                     credentials : 'include'
                 });
                 const data = await responses.json();
+                console.log(data);
+
 
                 setData(data);
                 setLoading(false);
@@ -105,8 +109,9 @@ function Dashboard(){
         }
     }
 
-    const active = (name) => {
-        setActiveId(name);
+    const active = (name , id) => {
+        setVenueName(name);
+        setVenueId(id);
         setOpenModal(true);
     }
 
@@ -127,7 +132,7 @@ function Dashboard(){
                         data.reserve.length > 0 ? (
                             data.reserve.map((r , i) => 
                                 <ReserveCard key={i}
-                                    handleActivation={() => active(r.name)} 
+                                    handleActivation={() => active(r.name , r.venueId)} 
                                     venue={r.name} 
                                     date={r.date} 
                                     time={r.slot} 
@@ -142,7 +147,8 @@ function Dashboard(){
             <KeyModal
                 isOpen={openModal}
                 onClose={() => setOpenModal(!openModal)}
-                title={activeId}
+                title={venueName}
+                id={venueId}
             />
         </>
     )

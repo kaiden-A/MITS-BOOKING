@@ -22,7 +22,7 @@ export const get_homepage = async (req , res) => {
 
             return{
                 reserveId : reserve._id,
-                venuedId : reserve.venueId._id,
+                venueId : reserve.venueId._id,
                 date : reserve.date,
                 name : reserve.venueId.name,
                 slot : reserve.slot,
