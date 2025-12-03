@@ -46,6 +46,7 @@ function AdminLogin(){
         <Success
             open={errBox}
             message={errMsg}
+            onClose={() => setErrBox(!errBox)}
             success={false}
         />
         

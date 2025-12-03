@@ -12,6 +12,7 @@ import CreateVenue from './page/admin/CreateVenue/CreateVenue';
 import CreateNews from './page/admin/CreateNews/CreateNews';
 import Reservations from './page/admin/Reservations/Reservations';
 import Inventories from './page/admin/Inventories/Inventories';
+import CreateUser from './page/admin/CreateUser/CreateUser';
 
 function App() {
   
@@ -36,6 +37,7 @@ function App() {
                 <Route path='/admin' element={<AdminPage/>}>
                   <Route path='dashboard' element={<AdminDashboard/>} />
                   <Route path='venues' element={<CreateVenue/>} />
+                  <Route path='users' element={<CreateUser/>} />
                   <Route path='news' element={<CreateNews/>} />
                   <Route path='active' element={<Reservations active={true}/>} />
                   <Route path='past' element={<Reservations active={false}/>} />

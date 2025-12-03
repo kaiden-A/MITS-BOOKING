@@ -117,6 +117,34 @@ function AdminSidebar() {
               Create new Venue
             </button>
 
+            {/* Add Users */}
+            <button
+              className="nav-item"
+              style={{
+                background:
+                  location.pathname === "/admin/users"
+                    ? activeBg
+                    : "rgba(255,255,255,0.15)",
+                color: "white",
+              }}
+              onClick={() => handleNavigate("/admin/users")}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background =
+                  location.pathname === "/admin/users" ? activeBg : hoverBg)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background =
+                  location.pathname === "/admin/users"
+                    ? activeBg
+                    : "rgba(255,255,255,0.15)")
+              }
+            >
+              <span className="nav-icon">
+                <i className="fas fa-user-friends"></i>
+              </span>
+              Add new Users
+            </button>
+
             {/* Active Sessions */}
             <button
               className="nav-item"

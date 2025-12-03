@@ -67,22 +67,14 @@ export const post_signUp = async (req , res) => {
 
         const user = await User.create({email , username , password});
 
-        const token = createToken(user._id);
-
-        res.cookie('jwt' , token ,
-            {   httpOnly : true , 
-                maxAge : maxAge * 1000,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? "none" : "lax"
-            } );
-        res.json({success : user});
+        res.json({success : true , data: user , msg : 'Successfully Add User'});
 
 
     }catch(err){
         console.log(err);
 
         if(err.code === 11000){
-            return res.status(400).json({error : 'Email Already Exist'})
+            return res.status(400).json({error : true , msg : 'Email Already Exist'})
         }
 
         res.status(500).json({error : err});

@@ -6,10 +6,14 @@ import ReserveCard from './components/ReserveCard';
 import EmptyState from './components/EmptyState';
 
 import Success from '../../global/Success';
+import KeyModal from './components/KeyModal';
+import Header from './components/Header';
 function Dashboard(){
 
     const [data , setData] = useState("");
     const [loading , setLoading] = useState(true);
+    const [activeId , setActiveId] = useState(0);
+    const [openModal , setOpenModal] = useState(false);
 
     const navigate = useNavigate();
 
@@ -101,6 +105,11 @@ function Dashboard(){
         }
     }
 
+    const active = (name) => {
+        setActiveId(name);
+        setOpenModal(true);
+    }
+
 
 
     return(
@@ -108,24 +117,17 @@ function Dashboard(){
         <>
             <title>User Dashboard</title>
             <main className="main-content">
-                <header className="page-header">
-                    <div className="page-title">
-                        <h1>{`Welcome Back ${data.user.username}`}</h1>
-                    </div>
-                    <div className="user-actions">
-                        <a className="logout-btn" onClick={logout}>
-                            <i className="fas fa-sign-out-alt"></i>
-                            Logout
-                        </a>
-                        <p className="user-email">{data.user.email}</p>
-                    </div>
-                </header>
-
+                <Header
+                    username={data.user.username}
+                    email={data.user.email}
+                    handleLogout={logout}
+                />
                 <div className="schedule-grid">
                     {
                         data.reserve.length > 0 ? (
                             data.reserve.map((r , i) => 
-                                <ReserveCard key={i} 
+                                <ReserveCard key={i}
+                                    handleActivation={() => active(r.name)} 
                                     venue={r.name} 
                                     date={r.date} 
                                     time={r.slot} 
@@ -137,6 +139,11 @@ function Dashboard(){
                     }
                 </div>
             </main>
+            <KeyModal
+                isOpen={openModal}
+                onClose={() => setOpenModal(!openModal)}
+                title={activeId}
+            />
         </>
     )
 
