@@ -175,7 +175,7 @@ function AdminSidebar() {
               Active Sessions
             </button>
 
-            {/* Past Sessions */}
+            {/* past session */}
             <button
               className="nav-item"
               style={{
@@ -203,6 +203,36 @@ function AdminSidebar() {
                 <i className="fas fa-clock"></i>
               </span>
               Past Sessions
+            </button>
+
+            {/* Key Storage */}
+            <button
+              className="nav-item"
+              style={{
+                background:
+                  location.pathname === "/admin/keys"
+                    ? activeBg
+                    : "rgba(255,255,255,0.15)",
+                color: "white",
+              }}
+              onClick={() => handleNavigate("/admin/keys")}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background =
+                  location.pathname === "/admin/keys"
+                    ? activeBg
+                    : hoverBg)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background =
+                  location.pathname === "/admin/keys"
+                    ? activeBg
+                    : "rgba(255,255,255,0.15)")
+              }
+            >
+              <span className="nav-icon">
+                <i className="fas fa-key"></i>
+              </span>
+              Key Storage
             </button>
 
             {/* Inventory */}

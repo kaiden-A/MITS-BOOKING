@@ -38,7 +38,7 @@ function CreateNews() {
               color: purple,
             }}
           >
-            Create a Venue
+            Create a News
           </h1>
 
           <button

@@ -2,6 +2,7 @@ import Venue from "../models/venue.js";
 import reserveVenue from "../models/reserveVenue.js";
 import HistoryReserve from '../models/historyReserve.js';
 import activeKey from "../models/ActiveKey.js";
+import historyKey from '../models/HistoryKey.js';
 import venue from "../models/venue.js";
 import User from '../models/users.js';
 import News from "../models/News.js";
@@ -207,3 +208,40 @@ export const delete_news = async (req , res) => {
     }
 }
 
+export const get_keys = async (req , res) =>{
+
+    try{
+
+        const totalKeys = await activeKey.countDocuments();
+        const totalAvail = await activeKey.countDocuments({keyStatus : "available"});
+        const keyTaken = await activeKey.countDocuments({keyStatus : "active"});
+
+        const keys = await activeKey.find()
+                        .select("_id venueId userId keyStatus takeTime")
+                        .populate("venueId" , "name").populate("userId" , "username");
+        if(!keys){
+            return res.status(401).json({error : true , msg : 'Fail To Retrieve Key'});
+        }
+
+            const hist = await historyKey.find()
+                        .select("keyStatus takeTime returnTime")
+                        .populate("venueId", "name")
+                        .populate("userId", "username")
+                        .lean();
+
+            const result = hist.map(h => ({
+                ...h,
+                name: h.venueId?.name,
+                username: h.userId?.username,
+                venueId: undefined,
+                userId: undefined
+            }));
+
+
+
+        res.json({active : keys , past : result , totalAvail , totalKeys , totalTaken : keyTaken})
+
+    }catch(err){
+        console.log(err);
+    }
+}

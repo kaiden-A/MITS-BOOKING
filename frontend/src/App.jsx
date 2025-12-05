@@ -13,6 +13,7 @@ import CreateNews from './page/admin/CreateNews/CreateNews';
 import Reservations from './page/admin/Reservations/Reservations';
 import Inventories from './page/admin/Inventories/Inventories';
 import CreateUser from './page/admin/CreateUser/CreateUser';
+import KeyStorage from './page/admin/KeyStorage/KeyStorage';
 
 function App() {
   
@@ -41,6 +42,7 @@ function App() {
                   <Route path='news' element={<CreateNews/>} />
                   <Route path='active' element={<Reservations active={true}/>} />
                   <Route path='past' element={<Reservations active={false}/>} />
+                  <Route path='keys' element={<KeyStorage/>} />
                   <Route path='inventories' element={<Inventories/>} />
                 </Route>
             </Routes>
