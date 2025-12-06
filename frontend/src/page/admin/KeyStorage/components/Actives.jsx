@@ -59,26 +59,26 @@ function Actives({keys}){
 
                     {
                         finalisedArray.map(key => 
-                           <tr key={key._id}>
-                                <td className="venue-cell">{key.venueId.name}</td>
+                           <tr key={key?._id}>
+                                <td className="venue-cell">{key?.venueId?.name}</td>
                                 <td>
                                     <span 
-                                        className={`status-badge ${key.keyStatus === "available" ? "status-available" : "status-taken"}`}
+                                        className={`status-badge ${key?.keyStatus === "available" ? "status-available" : "status-taken"}`}
                                     >
-                                        {`${key.keyStatus === "available" ? "available" : "taken"} `}
+                                        {`${key?.keyStatus === "available" ? "available" : "taken"} `}
                                     </span>
                                 </td>
                                 <td>
                                     {
-                                        key.keyStatus === "available" ? (
+                                        key?.keyStatus === "available" ? (
                                             <span className="not-available">available to use</span>
                                         ) : (
                                             
                                             <div className="key-holder">
-                                                <div  style={userAvatar}>{key.userId.username[0]}</div>
+                                                <div  style={userAvatar}>{key?.userId?.username[0]}</div>
                                                 <div style={userInfo}>
-                                                    <div style={userName}>{key.userId.username}</div>
-                                                    <div style={userEmail}>{key.userId.email}</div>
+                                                    <div style={userName}>{key?.userId?.username}</div>
+                                                    <div style={userEmail}>{key?.userId?.email}</div>
                                                 </div>
 
                                             </div>
