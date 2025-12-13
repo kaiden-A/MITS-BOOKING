@@ -32,7 +32,7 @@ export const get_homepage = async (req , res) => {
     .populate('venueId', 'name active')
     .populate('userId', 'username email');
 
-    const users = await User.find({}, 'username email'); // only return name+email
+    const users = await User.find({isDeleted : false , email: { $ne: process.env.ADMIN_EMAIL }});
     const news = await News.find({category : 'booking'});
 
     res.json( {
@@ -220,7 +220,7 @@ export const get_keys = async (req , res) =>{
                         .select("_id venueId userId keyStatus takeTime")
                         .populate("venueId" , "name").populate("userId" , "username");
         if(!keys){
-            return res.status(401).json({error : true , msg : 'Fail To Retrieve Key'});
+            return res.status(400).json({error : true , msg : 'Fail To Retrieve Key'});
         }
 
             const hist = await historyKey.find()
@@ -243,5 +243,26 @@ export const get_keys = async (req , res) =>{
 
     }catch(err){
         console.log(err);
+    }
+}
+
+export const delete_user_status = async(req , res) => {
+
+    const userId = req.params.id;
+
+    try{
+
+        const dltUser = await User.findByIdAndUpdate(userId , {isDeleted : true} , {new : true});
+
+        if(!dltUser){
+            return res.status(400).json({error : true , msg : "Fail Deleting the user"})
+        }
+
+        res.status(201).json({success : true , msg : 'Successfully deleted the user'});
+
+    }catch(err){
+
+        console.log(er);
+        res.status(500).json({error : true , msg : "Internal server Error"});
     }
 }
