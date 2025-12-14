@@ -83,7 +83,7 @@ function AdminDashboard(){
                 <div className="admin-header">
                     <h2>Welcome Back Admin</h2>
                     <div className="admin-logout">
-                        <span>admin@gmail.com</span>
+                        <span>mitsklangtech@gmail.com</span>
                         <Link onClick={logout}>logout</Link>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ function AdminDashboard(){
                 />
                 <div className='tab-content'>
                     {active === "Venues" && <VenuesCard venues={venues}/>}
-                    {active === "Users" && <UserCard users={users}/>}
+                    {active === "Users" && <UserCard users={users} setUsers={setUsers}/>}
                     {active === "News" && <NewsCard news={news}/>}
                     {active === "Past" && <ReserveData activeCard={false} data={history}/>}
                     {active === "Active" && <ReserveData activeCard={true} data={reserve}/>}

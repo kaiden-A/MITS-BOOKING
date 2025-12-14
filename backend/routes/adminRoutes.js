@@ -8,7 +8,8 @@ import {
     update_status_venues , 
     get_venue_inventory, post_news, 
     delete_news,
-    get_keys
+    get_keys,
+    delete_user_status
 } from "../controller/adminController.js";
 
 import { requireAdmin } from '../middleware/requireAdmin.js';
@@ -36,6 +37,7 @@ router.post('/news' , requireAdmin , post_news);
 router.delete('/news/:id' , requireAdmin , delete_news);
 
 router.post('/users' , requireAdmin , post_signUp);
+router.delete('/users/:id' , requireAdmin , delete_user_status);
 
 router.get('/keys' , get_keys);
 

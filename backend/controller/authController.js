@@ -22,6 +22,10 @@ export const post_login = async (req , res) => {
             return res.status(401).json({error : true , msg : 'Invalid Email'})
         }
 
+        if(user.isDeleted){
+            return res.status(401).json({error : true , msg : 'Email is Not Valid Anymore'})
+        }
+
         const isMatch = await user.comparePassword(password);
 
 
@@ -30,6 +34,7 @@ export const post_login = async (req , res) => {
         }
 
         const isAdmin = user.email === process.env.ADMIN_EMAIL;
+
 
         if(isAdminPath && !isAdmin){
             return res.status(401).json({error : true , msg : 'Your are not an admin'})
@@ -65,9 +70,9 @@ export const post_signUp = async (req , res) => {
             return res.status(403).json({error : true , msg : "password must be greater han 6 character"})
         }
 
-        const user = await User.create({email , username , password});
+        const user = await User.create({email , username , password , isDeleted : false});
 
-        res.json({success : true , data: user , msg : 'Successfully Add User'});
+        res.json({success : true , msg : 'Successfully Add User'});
 
 
     }catch(err){
