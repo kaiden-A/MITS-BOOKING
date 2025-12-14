@@ -72,7 +72,7 @@ export const post_signUp = async (req , res) => {
 
         const user = await User.create({email , username , password , isDeleted : false});
 
-        res.json({success : true , data: user , msg : 'Successfully Add User'});
+        res.json({success : true , msg : 'Successfully Add User'});
 
 
     }catch(err){
