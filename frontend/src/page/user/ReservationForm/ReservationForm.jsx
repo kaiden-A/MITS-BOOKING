@@ -17,6 +17,7 @@ function ReservationForm(){
     const [success , setSuccess] = useState(false);
     const [err , setErr] = useState(false);
     const [msg , setMsg] = useState("");
+    const [isSubmit , setIsSubmit] = useState(false);
 
     useEffect(() => {
 
@@ -89,6 +90,7 @@ function ReservationForm(){
 
     const handleForm = async (e) => {
 
+        setIsSubmit(true);
         e.preventDefault();
 
         try{
@@ -124,6 +126,8 @@ function ReservationForm(){
 
         }catch(err){
             console.log(err);
+        }finally{
+            setIsSubmit(false);
         }
 
     }
@@ -230,7 +234,12 @@ function ReservationForm(){
 
                         <hr className="form-divider"/>
 
-                        <button type="submit" className="submit-btn">
+                        <button 
+                            type="submit" 
+                            className="submit-btn"
+                            disabled={isSubmit}
+                            style={{backgroundColor : isSubmit ? "#6fdc8c"  : "#2da44a" , cursor: isSubmit ? "not-allowed" : "pointer"}}
+                        >
                             <i className="fas fa-paper-plane"></i>
                             SUBMIT SCHEDULE
                         </button>
