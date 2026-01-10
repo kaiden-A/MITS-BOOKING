@@ -3,11 +3,14 @@ import reserveVenue from "../models/reserveVenue.js";
 import HistoryReserve from '../models/historyReserve.js';
 import activeKey from "../models/ActiveKey.js";
 import historyKey from '../models/HistoryKey.js';
-import venue from "../models/venue.js";
 import User from '../models/users.js';
 import News from "../models/News.js";
+import formatTime from "../utils/formatTime.js";
+import catchAsync from "../utils/catchAsync.js";
+import AppError from "../utils/AppError.js";
+import { timeSlot } from "./timeSlot.js";
 
-export const get_homepage = async (req , res) => {
+export const get_homepage = catchAsync( async (req , res) => {
     const venues = await Venue.find();
 
     const today = new Date();
@@ -42,227 +45,247 @@ export const get_homepage = async (req , res) => {
         users,
         news
     });
-};
+})
 
 
 
 
-export const post_venue = async (req , res) => {
+export const post_venue = catchAsync(async (req , res) => {
+
+
+    const {name , location , capacity , active} = req.body;
+
+    const venue = await Venue.create({name , location , capacity , active});
     
-    try{
-
-        const {name , location , capacity , active} = req.body;
-
-        const venue = await Venue.create({name , location , capacity , active});
-        
-        if(!venue){
-            return res.status(403).json({error : true , msg : "Fail Create The Venue"})
-        }
-
-        const storeKey = await activeKey.create({venueId : venue._id});
-
-        if(!storeKey){
-            return res.status(403).json({error : true , msg : "Fail to Store The Key"})
-        }
-
-        res.json({success : true , msg : "Successfully Add the Venue"});
-
-    }catch(err){
-        console.log(err);
-        res.json({error : true , msg : err});
+    if(!venue){
+        throw new AppError('Fail Creating The Venue' , 403);
     }
 
-}
+    const storeKey = await activeKey.create({venueId : venue._id});
 
-export const update_status_venues = async (req , res) => {
+    if(!storeKey){
+        throw new AppError('Fail Store The Key' , 403);
+    }
+
+    res.json({success : true , msg : "Successfully Add the Venue"});
+
+
+})
+
+export const update_status_venues = catchAsync( async (req , res) => {
 
     const venueId = req.params.id;
     const {active} = req.body;
 
-    try{
+    
 
-        const updatedDocument = await Venue.findByIdAndUpdate(venueId , {active : active} , {new : true});
+    const updatedDocument = await Venue.findByIdAndUpdate(venueId , {active : active} , {new : true});
 
-        if(!updatedDocument){
-            return res.status(404).json({error : true , msg : "Updating The venue status has fail"})
-        }
-
-        res.json({success : true , msg : "venue being updated" ,data: updatedDocument})
-    }catch(err){
-        console.log(err);
-    }
-}
-
-export const get_past_reservations =  async (req , res) => {
-
-    try{
-
-        const history = await HistoryReserve.find().populate('userId' , 'username email').populate('venueId' , "name")
-
-        const result = history.map(venue => {
-
-            const date = new Date(venue.date);
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            const customDateString = date.toLocaleDateString('en-GB', options); // "23 September 2025"
-
-
-            return {
-
-                name : venue.venueId.name,
-                date : customDateString,
-                slot : venue.slot,
-                username : venue.userId.username,
-                reason : venue.reason
-
-            }
-        })
-
-        res.json({ venues : result , noData : 'no past data'});
-
-    }catch(err){
-
-        console.log(err);
+    if(!updatedDocument){
+       throw new AppError('Fail Updating The Venue Status' , 400);
     }
 
-}
+    res.json({success : true , msg : "venue being updated" ,data: updatedDocument})
 
-export const get_active_reservations = async (req , res) => {
+})
 
+export const get_past_reservations = catchAsync(async (req , res) => {
+
+    
+
+    const history = await HistoryReserve.find().populate('userId' , 'username email').populate('venueId' , "name")
+
+    const result = history.map(venue => {
+
+        const date = new Date(venue.date);
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const customDateString = date.toLocaleDateString('en-GB', options); // "23 September 2025"
 
         
-    try{
 
-        const reserve = await reserveVenue.find().sort({date : -1}).populate('userId' , 'username').populate('venueId' , 'name');
+        return {
 
-        const result = reserve.map( venue => {
+            name : venue.venueId.name,
+            date : customDateString,
+            slot : formatTime(venue.slot),
+            username : venue.userId.username,
+            reason : venue.reason
 
-            const date = new Date(venue.date);
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            const customDateString = date.toLocaleDateString('en-GB', options); // "23 September 2025"
+        }
+    })
 
-            return {
+    res.json({ venues : result , noData : 'no past data'});
 
-                name : venue.venueId.name,
-                date : customDateString,
-                slot : venue.slot,
-                username : venue.userId.username,
-                reason : venue.reason
+})
 
-            }
-        })
+export const get_active_reservations = catchAsync(async (req , res) => {
 
-        res.json({ venues : result, noData : 'no active data' });
+    const reserve = await reserveVenue.find().sort({date : -1}).populate('userId' , 'username').populate('venueId' , 'name');
 
-    }catch(err){
-        console.log(err);
-    }
+    const result = reserve.map( venue => {
 
-}
+        const date = new Date(venue.date);
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const customDateString = date.toLocaleDateString('en-GB', options); // "23 September 2025"
 
-export const get_venue_inventory = async (req , res) => {
+        return {
+
+            name : venue.venueId.name,
+            date : customDateString,
+            slot : formatTime(venue.slot),
+            username : venue.userId.username,
+            reason : venue.reason
+
+        }
+    })
+
+    res.json({ venues : result, noData : 'no active data' });
+
+
+
+})
+
+export const get_venue_inventory = catchAsync(async (req , res) => {
 
     const venue = await Venue.find();
-
-
     res.json({venues : venue})
-}
+})
 
 
-export const post_news = async (req , res) => {
+export const post_news = catchAsync( async (req , res) => {
 
     const {title , description , category} = req.body;
 
-    try{
+    const news = await News.create({title , description , category});
 
-        const news = await News.create({title , description , category});
-
-        if(!news){
-            return res.json({error : true , msg : 'UNCESSEFULLY CREATE NEWS'})
-        }
-
-        res.json({success : true , data : news , msg : "Successfully Create News"});
-
-    }catch(err){
-
-        console.log(err);
+    if(!news){
+        throw new AppError('Fail Creating The News' , 400);
     }
-}
 
-export const delete_news = async (req , res) => {
+    res.json({success : true , data : news , msg : "Successfully Create News"});
+
+})
+
+export const delete_news = catchAsync(async (req , res) => {
 
     const newsId = req.params.id;
     
-    try{
-        const news = await News.findByIdAndDelete(newsId);
+    
+    const news = await News.findByIdAndDelete(newsId);
 
-        if(!news){
-            return res.json({error: true , msg : 'Fail to delete news'})
-        }
-
-        res.json({success : true , data : news , msg : "Successfully delete news"});
-
-    }catch(err){
-        console.log(err);
-
-        res.status(500).json({error : true , msg : 'SERVER ERROR'})
+    if(!news){
+        throw new AppError('Fail Deleting The News' , 400);
     }
-}
 
-export const get_keys = async (req , res) =>{
+    res.json({success : true , data : news , msg : "Successfully delete news"});
 
-    try{
+})
 
-        const totalKeys = await activeKey.countDocuments();
-        const totalAvail = await activeKey.countDocuments({keyStatus : "available"});
-        const keyTaken = await activeKey.countDocuments({keyStatus : "active"});
-
-        const keys = await activeKey.find()
-                        .select("_id venueId userId keyStatus takeTime")
-                        .populate("venueId" , "name").populate("userId" , "username");
-        if(!keys){
-            return res.status(400).json({error : true , msg : 'Fail To Retrieve Key'});
-        }
-
-            const hist = await historyKey.find()
-                        .select("keyStatus takeTime returnTime")
-                        .populate("venueId", "name")
-                        .populate("userId", "username")
-                        .lean();
-
-            const result = hist.map(h => ({
-                ...h,
-                name: h.venueId?.name,
-                username: h.userId?.username,
-                venueId: undefined,
-                userId: undefined
-            }));
+export const get_keys = catchAsync( async (req , res) =>{
 
 
+    const totalKeys = await activeKey.countDocuments();
+    const totalAvail = await activeKey.countDocuments({keyStatus : "available"});
+    const keyTaken = await activeKey.countDocuments({keyStatus : "active"});
 
-        res.json({active : keys , past : result , totalAvail , totalKeys , totalTaken : keyTaken})
-
-    }catch(err){
-        console.log(err);
+    const keys = await activeKey.find()
+                    .select("_id venueId userId keyStatus takeTime")
+                    .populate("venueId" , "name").populate("userId" , "username");
+    if(!keys){
+        throw new AppError('Fail To Retrieve The Key' , 400);
     }
-}
 
-export const delete_user_status = async(req , res) => {
+        const hist = await historyKey.find()
+                    .select("keyStatus takeTime returnTime")
+                    .populate("venueId", "name")
+                    .populate("userId", "username")
+                    .lean();
+
+        const result = hist.map(h => ({
+            ...h,
+            name: h.venueId?.name,
+            username: h.userId?.username,
+            venueId: undefined,
+            userId: undefined
+        }));
+
+
+
+    res.json({active : keys , past : result , totalAvail , totalKeys , totalTaken : keyTaken})
+
+})
+
+export const delete_user_status = catchAsync(async(req , res) => {
 
     const userId = req.params.id;
 
-    try{
+    const dltUser = await User.findByIdAndUpdate(userId , {isDeleted : true} , {new : true});
 
-        const dltUser = await User.findByIdAndUpdate(userId , {isDeleted : true} , {new : true});
-
-        if(!dltUser){
-            return res.status(400).json({error : true , msg : "Fail Deleting the user"})
-        }
-
-        res.status(201).json({success : true , msg : 'Successfully deleted the user'});
-
-    }catch(err){
-
-        console.log(er);
-        res.status(500).json({error : true , msg : "Internal server Error"});
+    if(!dltUser){
+        throw new AppError('Fail Deleting The user' , 400);
     }
-}
+
+    res.status(201).json({success : true , msg : 'Successfully deleted the user'});
+
+    
+})
+
+export const delete_reserve = catchAsync(async (req , res) => {
+
+    const reserveId = req.params.reserveId;
+
+
+    const deletedVenue = await reserveVenue.findByIdAndDelete(reserveId);
+
+    if(!deletedVenue){
+        throw new AppError('Unsuccessfully Delete The Reservation' , 400);
+    }
+
+    res.json({success : true , msg : "Sucessfully deleted the reserve venue"})
+
+
+})
+
+
+export const mass_booking = catchAsync (async(req , res) => {
+
+    
+    const {venuePic , venueId , reason , dateBegin , dateEnd} = req.body;
+
+    const startDate = new Date(dateBegin);
+    const endDate = new Date(dateEnd);
+
+    if(endDate < startDate){
+        throw new AppError('Begin Date must be before End Date' , 400);
+    }
+
+    //delete booking first
+    await reserveVenue.deleteMany({
+        venueId: venueId,
+        date: { $gte: startDate, $lte: endDate },
+        slot: { $in: timeSlot } 
+    })
+
+    const bookings = [];
+
+    for(let d = new Date(startDate) ; d <= endDate ; d.setDate(d.getDate() + 1)){
+
+        const currentDate = new Date(d);
+
+        for(let time of timeSlot){
+            bookings.push({
+                userId : venuePic,
+                venueId : venueId,
+                date : currentDate,
+                slot : time,
+                reason : reason
+            })
+        }
+    }
+    
+    //add all booking
+    await reserveVenue.insertMany(bookings);
+    res.status(201).json({success : true , message : "Successfully Book Venue"})
+    
+
+})
