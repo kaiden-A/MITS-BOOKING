@@ -19,7 +19,7 @@ function ReserveCard({venue , date , time , handleDelete , handleEdit , handleAc
                 <div className="card-content">
                     <div className="schedule-info">
                         <p className="schedule-date">{formatDate(date)}</p>
-                        <p className="schedule-time">{addOneHourRange(time)}</p>
+                        <p className="schedule-time">{time}</p>
                     </div>
                 </div>
                 <div className="card-footer">

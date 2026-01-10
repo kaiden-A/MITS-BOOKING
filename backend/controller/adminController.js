@@ -246,6 +246,14 @@ export const delete_reserve = catchAsync(async (req , res) => {
 
 })
 
+export const get_user = catchAsync(async(req , res) => {
+
+    const users = await User.find({isDeleted : false});
+
+    res.status(200).json({users : users});
+
+})
+
 
 export const mass_booking = catchAsync (async(req , res) => {
 

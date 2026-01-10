@@ -11,7 +11,8 @@ import {
     get_keys,
     delete_user_status,
     delete_reserve,
-    mass_booking
+    mass_booking,
+    get_user
 } from "../controller/adminController.js";
 
 import { requireAdmin } from '../middleware/requireAdmin.js';
@@ -39,6 +40,7 @@ router.delete('/reservations/:reserveId', delete_reserve) ;
 router.post('/news' , requireAdmin , post_news);
 router.delete('/news/:id' , requireAdmin , delete_news);
 
+router.get('/users' , requireAdmin , get_user);
 router.post('/users' , requireAdmin , post_signUp);
 router.delete('/users/:id' , requireAdmin , delete_user_status);
 
