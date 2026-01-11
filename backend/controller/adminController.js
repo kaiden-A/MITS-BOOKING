@@ -104,7 +104,7 @@ export const get_past_reservations = catchAsync(async (req , res) => {
         
 
         return {
-
+            id : venue._id,
             name : venue.venueId.name,
             date : customDateString,
             slot : formatTime(venue.slot),
@@ -129,7 +129,7 @@ export const get_active_reservations = catchAsync(async (req , res) => {
         const customDateString = date.toLocaleDateString('en-GB', options); // "23 September 2025"
 
         return {
-
+            id : venue._id,
             name : venue.venueId.name,
             date : customDateString,
             slot : formatTime(venue.slot),

@@ -1,9 +1,12 @@
 import { useEffect, useState , useMemo } from "react";
+import DeleteReservations from "./DeleteReservation";
 
-function CardContent({venues}){
+function CardContent({venues , setVenues}){
 
     const [searchPrompt , setSearchPrompt] = useState("");
     const [filter , setFilter] = useState("date");
+    const [open , setOpen] = useState(false);
+    const [current , setCurrent] = useState({});
 
     const sortedAndSearchArray = useMemo(() => {
 
@@ -35,51 +38,63 @@ function CardContent({venues}){
     }
 
     return(
-        <div className="card-content">
+        <>
+            {open && 
+                <DeleteReservations 
+                    onClose={() => setOpen(false)} 
+                    title={current.name}
+                    username={current.username}
+                    slot={current.slot}
+                    id={current.id}
+                    setVenues={setVenues}
+                />
+            }
+            <div className="card-content">
 
-            <div className="search-filter" onSubmit={handleSub}>
-                <form>
-                    <input 
-                        type="text" 
-                        name="userInput" 
-                        placeholder="Enter a venue name..."
-                        value={searchPrompt}
-                        onChange={(e) => setSearchPrompt(e.target.value)}    
-                    />
-                </form>
-                <div className="filter">
-                    <select id="sort-selection" onChange={(e) => setFilter(e.target.value)}>
-                        <option value="">Filter</option>
-                        <option value="date">Ascending Order</option>
-                        <option value="-date">Discending Order</option>
-                        <option value={"pic"}>Supervisor</option>
-                    </select>
+                <div className="search-filter" onSubmit={handleSub}>
+                    <form>
+                        <input 
+                            type="text" 
+                            name="userInput" 
+                            placeholder="Enter a venue name..."
+                            value={searchPrompt}
+                            onChange={(e) => setSearchPrompt(e.target.value)}    
+                        />
+                    </form>
+                    <div className="filter">
+                        <select id="sort-selection" onChange={(e) => setFilter(e.target.value)}>
+                            <option value="">Filter</option>
+                            <option value="date">Ascending Order</option>
+                            <option value="-date">Discending Order</option>
+                            <option value={"pic"}>Supervisor</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div className="card-grid-parent">
-                {
-                    sortedAndSearchArray?.length > 0 ? (
-                        sortedAndSearchArray?.map((venue , i) => 
-                            <div className="card" key={i}>
-                                <p className="name">{venue.name}</p>
+                <div className="card-grid-parent">
+                    {
+                        sortedAndSearchArray?.length > 0 ? (
+                            sortedAndSearchArray?.map((venue , i) => 
+                                <div className="card" key={i} onClick={() =>{ setOpen(true); setCurrent(venue) }}>
+                                    <p className="name">{venue.name}</p>
 
-                                <p className="date">{venue.date}</p>
-                                <p className="slot">{venue.slot}</p>
-                                <hr className="devider"/>
+                                    <p className="date">{venue.date}</p>
+                                    <p className="slot">{venue.slot}</p>
+                                    <hr className="devider"/>
 
-                                <p className="teacher">{`Supervisor : ${venue.username}`}</p>
-                            
-                                <p className="reason">{`Reason : ${venue.reason}`}</p>
-                            </div>
+                                    <p className="teacher">{`Supervisor : ${venue.username}`}</p>
+                                
+                                    <p className="reason">{`Reason : ${venue.reason}`}</p>
+                                </div>
+                            )
+                        ) : (
+                            <p>No Data</p>
                         )
-                    ) : (
-                        <p>No Data</p>
-                    )
-                }
-                
-            </div>
+                    }
+                    
+                </div>
 
-        </div>
+            </div>
+        </>
     )
    
 }
