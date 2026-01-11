@@ -1,14 +1,12 @@
-import { compareSync } from "bcrypt";
 import reserveVenue from "../models/reserveVenue.js";
 import User from '../models/users.js';
 import Venue from '../models/venue.js';
 import { timeSlot } from "./timeSlot.js";
 import activeKey from "../models/ActiveKey.js";
 import historyKey from "../models/HistoryKey.js";
+import formatTime from "../utils/formatTime.js";
 
 export const get_homepage = async (req , res) => {
-
-    const currentUser = req.user;
 
 
     try{
@@ -25,7 +23,7 @@ export const get_homepage = async (req , res) => {
                 venueId : reserve.venueId._id,
                 date : reserve.date,
                 name : reserve.venueId.name,
-                slot : reserve.slot,
+                slot : formatTime(reserve.slot),
                 reason : reserve.reason
             }
 

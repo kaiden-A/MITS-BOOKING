@@ -9,7 +9,10 @@ import {
     get_venue_inventory, post_news, 
     delete_news,
     get_keys,
-    delete_user_status
+    delete_user_status,
+    delete_reserve,
+    mass_booking,
+    get_user
 } from "../controller/adminController.js";
 
 import { requireAdmin } from '../middleware/requireAdmin.js';
@@ -32,13 +35,17 @@ router.get('/venues/inventories' , requireAdmin , get_venue_inventory);
 
 router.get('/past/reservations' , requireAdmin , get_past_reservations);
 router.get('/active/reservations', requireAdmin , get_active_reservations);
+router.delete('/reservations/:reserveId', delete_reserve) ;
 
 router.post('/news' , requireAdmin , post_news);
 router.delete('/news/:id' , requireAdmin , delete_news);
 
+router.get('/users' , requireAdmin , get_user);
 router.post('/users' , requireAdmin , post_signUp);
 router.delete('/users/:id' , requireAdmin , delete_user_status);
 
 router.get('/keys' , get_keys);
+
+router.post('/bookings' , mass_booking);
 
 export default router;

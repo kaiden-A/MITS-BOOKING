@@ -1,7 +1,8 @@
 
 
-function ReserveCard({venue , date , time , handleDelete , handleEdit , handleActivation}){
+function ReserveCard({venue , date , time , handleDelete , handleEdit , handleActivation , isSubmit}){
 
+    
 
     return(
         <>
@@ -18,13 +19,18 @@ function ReserveCard({venue , date , time , handleDelete , handleEdit , handleAc
                 <div className="card-content">
                     <div className="schedule-info">
                         <p className="schedule-date">{formatDate(date)}</p>
-                        <p className="schedule-time">{addOneHourRange(time)}</p>
+                        <p className="schedule-time">{time}</p>
                     </div>
                 </div>
                 <div className="card-footer">
                     <div></div>
                     <div className="card-actions">
-                        <button className="card-btn delete-btn" onClick={handleDelete}>
+                        <button 
+                            className="card-btn delete-btn" 
+                            onClick={handleDelete}
+                            disabled={isSubmit}
+                            style={{backgroundColor : isSubmit ? "#cf222e" : "#d64852ff" , cursor: isSubmit ? "not-allowed" : "pointer"}}
+                        >
                             <i className="fas fa-trash"></i>
                             DELETE
                         </button>

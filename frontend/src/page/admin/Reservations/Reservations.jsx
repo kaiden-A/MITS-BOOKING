@@ -20,7 +20,7 @@ function Reservations({active}){
                 })
 
                 const data = await responses.json();
-
+                console.log(data.venues);
                 setVenues(data.venues)
 
             }catch(err){
@@ -42,6 +42,7 @@ function Reservations({active}){
             </div>
             <CardContent
                 venues={venues}
+                setVenues={setVenues}
             />
         </div>
         </>

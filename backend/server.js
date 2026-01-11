@@ -9,6 +9,7 @@ import startCronFunction from './controller/deleteReservation.js';
 import apiRoutes from './routes/api.js'
 import cors from 'cors';
 import { requireAuth } from './middleware/requireAuth.js';
+import errorHandler from './middleware/errorHandler.js';
 
 dotenv.config();
 const app = express();
@@ -51,5 +52,6 @@ app.get('/' , requireAuth , (req , res) => {
 app.use(adminPath , adminRoutes);
 app.use('/api' , apiRoutes)
 app.use('/' , authRoutes);
+app.use(errorHandler);
 
 

@@ -1,8 +1,12 @@
 import { useState , useMemo  } from "react";
-
+import BookingModal from "./BookingModal";
+import Notifications from '../../../global/Success';
 function Venues({venues , setVenues}){
 
     const [searchPrompt , setSearchPrompt] = useState("");
+    const [open , setOpen] = useState(false);
+    const [currentData , setCurrentData] = useState({});
+    const [success , setSuccess] = useState(false);
 
     const searchArray = useMemo(() => {
 
@@ -46,6 +50,26 @@ function Venues({venues , setVenues}){
     return(
 
         <>
+            {
+                success && 
+                <Notifications
+                    open={open} 
+                    onClose={() => setOpen(false)}  
+                    success={true}
+                    message={'Successfully Book The Venue'}
+                />
+            
+            }
+            {   
+            
+                open && 
+                
+                <BookingModal 
+                    setOpen={setOpen} 
+                    venues={currentData}
+                    setSuccess={setSuccess}
+                />
+            }
              <div className="form">
                 <input className="input-inventory" type="text" name="name" placeholder="Enter a venue" 
                     onChange={(e) => setSearchPrompt(e.target.value) }
@@ -60,7 +84,13 @@ function Venues({venues , setVenues}){
 
                         searchArray.map((venue) => 
 
-                            <div key={venue._id} className="card">
+                            <div key={venue._id} className="card" 
+                                onClick={() =>{
+                                    setCurrentData(venue); 
+                                    setOpen(true)
+                                }}
+                            
+                            >
 
                                 <div className="head-card">
                                     <h2>{venue.name}</h2>
