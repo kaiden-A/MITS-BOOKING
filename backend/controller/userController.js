@@ -1,4 +1,3 @@
-import { compareSync } from "bcrypt";
 import reserveVenue from "../models/reserveVenue.js";
 import User from '../models/users.js';
 import Venue from '../models/venue.js';
