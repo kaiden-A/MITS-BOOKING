@@ -45,6 +45,16 @@ mongoose.connect(dbUri)
 
 startCronFunction();
 
+app.use((req, res, next) => {
+  res.setHeader(
+    'Cache-Control',
+    'no-store, no-cache, must-revalidate, private'
+  );
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
+
 app.get('/' , requireAuth , (req , res) => {
         res.json({success : true , cookies : true})
 })

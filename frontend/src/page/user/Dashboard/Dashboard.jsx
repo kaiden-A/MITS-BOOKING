@@ -10,12 +10,14 @@ import KeyModal from './components/KeyModal';
 import Header from './components/Header';
 function Dashboard(){
 
-    const [data , setData] = useState("");
+    const [data , setData] = useState({});
     const [loading , setLoading] = useState(true);
     
     const [venueName , setVenueName] = useState("");
     const [venueId , setVenueId] = useState(0);
     const [openModal , setOpenModal] = useState(false);
+
+    const [noti , setNoti] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ function Dashboard(){
                 const responses = await fetch(`${import.meta.env.VITE_BACKEND_API}/dashboard` , {
                     credentials : 'include'
                 });
+                
                 const data = await responses.json();
                 console.log(data);
 
@@ -37,6 +40,8 @@ function Dashboard(){
 
             }catch(err){
                 console.log(err);
+            }finally{
+                setLoading(false);
             }
             
         }
@@ -74,7 +79,7 @@ function Dashboard(){
         const data = await dlt(id);
 
         if(data.success){
-
+            setNoti(true);
             setData(d => ({...d , reserve : d.reserve.filter(r => r.reserveId !== id)}))
         }
     }
@@ -120,6 +125,12 @@ function Dashboard(){
     return(
 
         <>
+            <Success
+                open={noti}
+                onClose={() => setNoti(false)}
+                message={'Successfully Delete Booking'}
+                success={true}
+            />
             <title>User Dashboard</title>
             <main className="main-content">
                 <Header
@@ -132,12 +143,12 @@ function Dashboard(){
                         data.reserve.length > 0 ? (
                             data.reserve.map((r , i) => 
                                 <ReserveCard key={i}
-                                    handleActivation={() => active(r.name , r.venueId)} 
-                                    venue={r.name} 
-                                    date={r.date} 
-                                    time={r.slot} 
-                                    handleDelete={() => deleteReserve(r.reserveId)}
-                                    handleEdit={() => editReserve(r.reserveId)}
+                                    handleActivation={() => active(r?.name , r?.venueId)} 
+                                    venue={r?.name} 
+                                    date={r?.date} 
+                                    time={r?.slot} 
+                                    handleDelete={() => deleteReserve(r?.reserveId)}
+                                    handleEdit={() => editReserve(r?.reserveId)}
                                 />
                             )
                         ): <EmptyState/>
