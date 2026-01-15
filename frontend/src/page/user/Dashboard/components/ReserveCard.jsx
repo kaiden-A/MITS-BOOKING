@@ -6,7 +6,7 @@ function ReserveCard({venue , date , time , handleDelete , handleEdit , handleAc
 
     return(
         <>
-            <div className="schedule-card" onClick={handleActivation}>
+            <div className="schedule-card" onDoubleClick={handleActivation}>
                 <div className="card-header">
                     <div>
                         <h3 className="card-title">{venue}</h3>

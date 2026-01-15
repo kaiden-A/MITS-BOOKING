@@ -7,15 +7,29 @@ export default function startCronFunction(){
     nodeCron.schedule("9 0 * * *", async () => {
 
         try {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); // Start of today
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            yesterday.setHours(23, 59, 59, 999);
 
-            const deletedRecord = await ReserveVenue.find({date : {$lt: today}});
-            await History.insertMany(deletedRecord);
+            const expired = await ReserveVenue
+                .find({ date: { $lte: yesterday } })
+                .lean();
+            
 
-            await ReserveVenue.deleteMany({ date: { $lt: today } });
-            console.log("Old reservations cleared");
+            console.log("Expired Count: " , expired.length);
 
+            if(expired.length === 0) return;
+
+            const historyDocs = expired.map(({ _id, ...rest }) => rest);
+
+            if (historyDocs.length > 0) {
+                const result = await History.insertMany(historyDocs);
+                if (result.length === historyDocs.length) {
+                    await ReserveVenue.deleteMany({ date: { $lte: yesterday } });
+                }
+            }
+
+            console.log("Reservations moved to history");
 
         } catch (err) {
             console.error("Error clearing reservations:", err);
